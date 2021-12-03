@@ -29,22 +29,28 @@ public class InitialData implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		Author author = new Author("Allan", "Alarcón");
-		Book book = new Book("Harry Potter", "12345");
-		Address address = new Address("Cdla. El Cóndor", "Guayaquil", "Guayas", "090107");
 		Publisher publisher = new Publisher("Nuevo publisher");
+		Address address = new Address("Cdla. El Cóndor", "Guayaquil", "Guayas", "090107");
 
-		author.getBooks().add(book);
-		book.getAuthors().add(author);
 		publisher.setAddress(address);
 
-		authorRepository.save(author);
-		bookRepository.save(book);
 		addressRepository.save(address);
 		publisherRepository.save(publisher);
 
-		System.out.println("Data");
+		Author author = new Author("Allan", "Alarcón");
+		Book book = new Book("Harry Potter", "12345");
+
+		author.getBooks().add(book);
+		book.getAuthors().add(author);
+
+		book.setPublisher(publisher);
+		publisher.getBooks().add(book);
+
+		authorRepository.save(author);
+		bookRepository.save(book);
+		publisherRepository.save(publisher);
+
+		System.out.println("Data1");
 		System.out.println("Number of authors: " + authorRepository.count());
 		System.out.println("Number of publishers: " + publisherRepository.count());
 	}
